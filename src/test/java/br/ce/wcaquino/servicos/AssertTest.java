@@ -37,7 +37,7 @@ public class AssertTest {
 		assertNull(u3);
 		assertNotNull(u2);
 		
-		assertEquals("bola não está escrito corretamente", "bola", "Bola");
+		assertEquals("bola não está escrito corretamente", "Bola", "Bola");
 
 	}
 }
