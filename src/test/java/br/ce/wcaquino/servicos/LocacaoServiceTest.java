@@ -1,7 +1,11 @@
 package br.ce.wcaquino.servicos;
 
-import static br.ce.wcaquino.servicos.matchers.MatchersProprios.*;
-import static br.ce.wcaquino.utils.DataUtils.*;
+import static br.ce.wcaquino.servicos.matchers.MatchersProprios.cairEm;
+import static br.ce.wcaquino.servicos.matchers.MatchersProprios.cairEmUmSegunda;
+import static br.ce.wcaquino.servicos.matchers.MatchersProprios.ehHoje;
+import static br.ce.wcaquino.servicos.matchers.MatchersProprios.ehHojeComDiferencaDias;
+import static br.ce.wcaquino.utils.DataUtils.isMesmaData;
+import static br.ce.wcaquino.utils.DataUtils.obterDataComDiferencaDias;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
@@ -66,6 +70,10 @@ public class LocacaoServiceTest {
 		
 		assertTrue(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1)));
 		error.checkThat(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1)), is(true));
+		
+		error.checkThat(locacao.getDataLocacao(), ehHoje());
+		error.checkThat(locacao.getDataRetorno(), ehHojeComDiferencaDias(1));
+
 	}
 	
 	@Test(expected = FilmeSemEstoqueException.class)
