@@ -1,7 +1,7 @@
 package br.ce.wcaquino.servicos;
 
-import static br.ce.wcaquino.utils.DataUtils.isMesmaData;
-import static br.ce.wcaquino.utils.DataUtils.obterDataComDiferencaDias;
+import static br.ce.wcaquino.servicos.matchers.MatchersProprios.*;
+import static br.ce.wcaquino.utils.DataUtils.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
@@ -194,5 +194,10 @@ public class LocacaoServiceTest {
 		//verificacao
 		boolean ehSegunda = DataUtils.verificarDiaSemana(retorno.getDataRetorno(), Calendar.MONDAY);
 		assertTrue(ehSegunda);
+		
+		// assertThat(retorno.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
+		assertThat(retorno.getDataRetorno(), cairEm(Calendar.MONDAY));
+		assertThat(retorno.getDataRetorno(), cairEmUmSegunda());
+
 	}
 }
