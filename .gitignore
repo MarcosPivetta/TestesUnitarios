@@ -1,1 +1,7 @@
 target/*
+
+libs/
+
+target/
+
+\.classpath
