@@ -18,6 +18,10 @@ public class Calculadora {
 		}
 		return a / b;
 	}
+	
+	public int dividir(String a, String b) {
+		return Integer.valueOf(a) / Integer.valueOf(b);
+	}
 
 	public int multiplicar(int a, int b) {
 		return a * b;

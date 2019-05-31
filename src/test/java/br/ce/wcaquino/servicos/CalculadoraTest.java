@@ -1,5 +1,7 @@
 package br.ce.wcaquino.servicos;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -78,5 +80,16 @@ public class CalculadoraTest {
 		b = 0;
 		
 		calc.dividir(a, b);
+	}
+	
+	@Test
+	public void deveDividir( ) {
+		String a, b;
+		a = "6";
+		b = "3";
+		
+		int resultado = calc.dividir(a, b);
+		
+		assertEquals(2, resultado);
 	}
 }
