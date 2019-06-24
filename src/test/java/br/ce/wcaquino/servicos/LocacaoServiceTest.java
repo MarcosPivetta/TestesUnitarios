@@ -27,9 +27,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 
 import br.ce.wcaquino.daos.LocacaoDAO;
-import br.ce.wcaquino.daos.LocacaoDAOFake;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -52,7 +52,7 @@ public class LocacaoServiceTest {
 	public void setup() {
 		//cenario
 		service = new LocacaoService();
-		LocacaoDAO dao = new LocacaoDAOFake();
+		LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
 		service.setLocacaoDAO(dao);
 	}
 	
@@ -215,9 +215,5 @@ public class LocacaoServiceTest {
 		assertThat(retorno.getDataRetorno(), cairEm(Calendar.MONDAY));
 		assertThat(retorno.getDataRetorno(), cairEmUmSegunda());
 
-	}
-	
-	public static void main(String[] args) {
-		new BuilderMaster().gerarCodigoClasse(Locacao.class);
 	}
 }
