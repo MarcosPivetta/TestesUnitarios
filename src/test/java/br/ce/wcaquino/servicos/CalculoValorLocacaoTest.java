@@ -28,6 +28,10 @@ public class CalculoValorLocacaoTest {
 
 	public LocacaoService service;
 	
+	public SPCService spcService;
+	
+	public LocacaoDAO dao;
+	
 	@Parameter
 	public List<Filme> filmes;
 	
@@ -40,8 +44,10 @@ public class CalculoValorLocacaoTest {
 	@Before
 	public void setup() {
 		service = new LocacaoService();
-		LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
+		dao = Mockito.mock(LocacaoDAO.class);
 		service.setLocacaoDAO(dao);
+		spcService = Mockito.mock(SPCService.class);
+		service.setSPCService(spcService);
 	}
 	
 	
