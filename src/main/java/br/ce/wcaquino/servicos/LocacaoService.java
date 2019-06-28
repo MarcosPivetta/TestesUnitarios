@@ -82,11 +82,13 @@ public class LocacaoService {
 		return locacao;
 	}
 	
-	public void notificarAtradasos() {
+	public void notificaraAtrasados() {
 		List<Locacao> locacoes = dao.obterLocacoesPendentes();
 		
 		for (Locacao locacao : locacoes) {
-			emailService.notificarAtraso(locacao.getUsuario());
+			if (locacao.getDataRetorno().before(new Date())) {
+				emailService.notificarAtraso(locacao.getUsuario());
+			}
 		}
 	}
 	

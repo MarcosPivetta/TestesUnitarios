@@ -17,7 +17,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -239,7 +242,7 @@ public class LocacaoServiceTest {
 		//Usuario usuario2 = umUsuario().comNome("Usuario 2").agora();
 		List<Filme> filmes = Arrays.asList(umFilme().agora());
 		
-		when(spcService.possuiNegativacao(usuario)).thenReturn(true);
+		when(spcService.possuiNegativacao(Mockito.any(Usuario.class))).thenReturn(true);
 				
 		//acao
 		try {
@@ -257,17 +260,24 @@ public class LocacaoServiceTest {
 	public void deveEnviarEmailParaLocacoesAtradas() {
 		//cenario
 		Usuario usuario = umUsuario().agora();
+		Usuario usuario2 = umUsuario().comNome("Usuario em dia").agora();
+		Usuario usuario3 = umUsuario().comNome("Outro Atrasado").agora();
 		List<Locacao> locacoes = asList(
-				umLocacao()
-					.comUsuario(usuario)
-					.comDataRetorno(obterDataComDiferencaDias(-2))
-					.agora());
+				umLocacao().atrasado().comUsuario(usuario).agora(),
+				umLocacao().comUsuario(usuario2).agora(),
+				umLocacao().atrasado().comUsuario(usuario3).agora(),
+				umLocacao().atrasado().comUsuario(usuario3).agora());
 		when(dao.obterLocacoesPendentes()).thenReturn(locacoes);
 		
 		//acao
-		service.notificarAtradasos();
+		service.notificaraAtrasados();
 		
 		//verificar
-		verify(email).notificarAtraso(usuario);
+		// verify(email, times(3)).notificarAtraso(Mockito.any(Usuario.class));
+		// verify(email).notificarAtraso(usuario);
+		// verify(email, times(2)).notificarAtraso(usuario3);
+		// verify(email, never()).notificarAtraso(usuario2);
+		verifyNoMoreInteractions(email);
+		verifyZeroInteractions(spcService);
 	}
 }
